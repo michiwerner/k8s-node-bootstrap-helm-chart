@@ -21,20 +21,20 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: {{ Release.Name }}
+  name: {{ .Release.Name }}
   labels:
-    app: {{ Release.Name }}
+    app: {{ .Release.Name }}
 spec:
   selector:
     matchLabels:
-      app: {{ Release.Name }}
+      app: {{ .Release.Name }}
   updateStrategy:
     type: RollingUpdate
   template:
     metadata:
       labels:
-        name: {{ Release.Name }}
-        app: {{ Release.Name }}
+        name: {{ .Release.Name }}
+        app: {{ .Release.Name }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -46,12 +46,12 @@ spec:
           path: /
       - name: entrypoint
         configMap:
-          name: {{ Release.Name }}-entrypoint
+          name: {{ .Release.Name }}-entrypoint
           defaultMode: 0744
       initContainers:
       - image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
-        name: {{ Release.Name }}
+        name: {{ .Release.Name }}
         command: ["/scripts/entrypoint.sh"]
         env:
         - name: ROOT_MOUNT_DIR
