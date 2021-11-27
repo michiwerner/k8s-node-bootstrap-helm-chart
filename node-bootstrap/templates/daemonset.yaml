@@ -1,0 +1,76 @@
+
+   
+# Copyright 2019 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Contains modifications by Michael Werner.
+# See https://github.com/GoogleCloudPlatform/solutions-gke-init-daemonsets-tutorial/blob/master/daemon-set.yaml
+# for unmodified original.
+
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: {{ .Values.instanceName }}
+  labels:
+    app: {{ .Values.instanceName }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.instanceName }}
+  updateStrategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.instanceName }}
+        app: {{ .Values.instanceName }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+      - name: root-mount
+        hostPath:
+          path: /
+      - name: entrypoint
+        configMap:
+          name: {{ .Values.instanceName }}-entrypoint
+          defaultMode: 0744
+      initContainers:
+      - image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        name: {{ .Values.instanceName }}
+        command: ["/scripts/entrypoint.sh"]
+        env:
+        - name: ROOT_MOUNT_DIR
+          value: /root
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - name: root-mount
+          mountPath: /root
+        - name: entrypoint
+          mountPath: /scripts
+      containers:
+      - image: "gcr.io/google-containers/pause:2.0"
+        name: pause
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
