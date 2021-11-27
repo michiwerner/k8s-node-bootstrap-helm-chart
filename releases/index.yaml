@@ -3,13 +3,13 @@ entries:
   node-bootstrap:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2021-11-27T15:16:54.694800296Z"
+    created: "2021-11-27T15:23:15.182975794Z"
     description: An inofficial Helm chart for GCP's tutorial on "Automatically bootstrapping
       GKE nodes with DaemonSets"
-    digest: afe0ce0ca2f670f1360bc6d73b40157c120b8cdb99b1e355dcd987b9886c26b8
+    digest: 6d8956c9758d0fdc63b6b29be3409c2979285fe60f60363357459e77ba3778b8
     name: node-bootstrap
     type: application
     urls:
     - node-bootstrap-0.1.0.tgz
     version: 0.1.0
-generated: "2021-11-27T15:16:54.693014575Z"
+generated: "2021-11-27T15:23:15.182497275Z"
