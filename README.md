@@ -21,7 +21,7 @@ Using Helm 3.x, the installation is a two-step process.
 
 First, add the repository:
 
-<pre><code>helm repo add k8s-node-bootstrap https://michiwerner.github.io/k8s-node-bootstrap-helm-chart/releases</code></pre>
+<pre><code>helm repo add k8s-node-bootstrap https://michiwerner.github.io/k8s-node-bootstrap-helm-chart/helm-charts</code></pre>
 
 Then, install the chart:
 

@@ -8,16 +8,16 @@ jobs:
     runs-on: ubuntu-latest
     name: Test
     steps:
-    - name: install minikube
-      run: curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && mv minikube-linux-amd64 /usr/local/bin/minikube && chmod +x /usr/local/bin/minikube
-    - name: start minikube
-      run: minikube start
-    - name: install helm
-      run: curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-    - name: checkout
-      uses: actions/checkout@v2
-    - name: helm install node-bootstrap
-      run: helm install -n kube-system node-bootstrap ./node-bootstrap
+      - name: install minikube
+        run: curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && mv minikube-linux-amd64 /usr/local/bin/minikube && chmod +x /usr/local/bin/minikube
+      - name: start minikube
+        run: minikube start
+      - name: install helm
+        run: curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: helm install node-bootstrap
+        run: helm install -n kube-system node-bootstrap ./node-bootstrap
   package:
     needs: test
     runs-on: ubuntu-latest
@@ -52,8 +52,8 @@ jobs:
         with:
           name: helm-package
       - name: move artifiact into place and generate index
-        run: mkdir -p ./releases; mv -f node-bootstrap-*.tgz releases/ && helm repo index ./releases
+        run: mkdir -p ./helm-charts; mv -f node-bootstrap-*.tgz helm-charts/ && helm repo index ./helm-charts
       - name: set git user config
         run: git config --global user.email "workflow@github-actions.local" && git config --global user.name "GitHub Actions Workflow"
       - name: commit and push
-        run: git add releases/* && git commit -m "publish release" && git push
+        run: git add helm-charts/* && git commit -m "publish release" && git push
