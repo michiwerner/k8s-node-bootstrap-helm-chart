@@ -13,6 +13,8 @@ nodeSelector: {}
 
 tolerations: []
 
+runEntrypointScriptChrooted: false
+
 entrypointScript: |
   #!/usr/bin/env bash
   echo "Hello World"
