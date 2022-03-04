@@ -52,7 +52,7 @@ spec:
       - image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         name: {{ .Release.Name }}
-        command: {{ If .Values.runEntrypointScriptChrooted }}["/bin/bash", "-c", "cp -v /mnt/scripts/entrypoint.sh /mnt/root/__node_bootstrap_entrypoint.sh && chroot /mnt/root /__node_bootstrap_entrypoint.sh; rm -fv /mnt/root/__node_bootstrap_entrypoint.sh"]{{ else }}["/mnt/scripts/entrypoint.sh"]{{ end }}
+        command: {{ if .Values.runEntrypointScriptChrooted }}["/bin/bash", "-c", "cp -v /mnt/scripts/entrypoint.sh /mnt/root/__node_bootstrap_entrypoint.sh && chroot /mnt/root /__node_bootstrap_entrypoint.sh; rm -fv /mnt/root/__node_bootstrap_entrypoint.sh"]{{ else }}["/mnt/scripts/entrypoint.sh"]{{ end }}
         env:
         - name: ROOT_MOUNT_DIR
           value: /mnt/root
