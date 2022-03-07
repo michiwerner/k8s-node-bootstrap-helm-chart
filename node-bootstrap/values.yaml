@@ -14,5 +14,4 @@ nodeSelector: {}
 tolerations: []
 
 bootstrapScript: |
-  #!/usr/bin/env bash
   echo "Hello World"

@@ -52,15 +52,9 @@ spec:
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         name: {{ .Release.Name }}
         command: 
-        - "nsenter"
-        args:
-        - "-t"
-        - "1"
-        - "-m"
-        - "-u"
-        - "-i"
-        - "-n"
-        - "/tmp/{{ .Release.Name }}-bootstrap-script.sh"
+        - "/bin/sh"
+        - "-c"
+        - "cat /tmp/{{ .Release.Name }}-bootstrap-script.sh | nsenter -t 1 -m -u -i -n /bin/sh"
         securityContext:
           privileged: true
         volumeMounts:
