@@ -3,7 +3,17 @@ entries:
   node-bootstrap:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2022-03-07T18:54:11.742001207Z"
+    created: "2022-03-07T19:13:43.441894273Z"
+    description: A Helm chart for bootstrapping Kubernetes nodes.
+    digest: a8812602729257814a396e1d44088cf686265cc8f8c021d2a26382ea073cc2da
+    name: node-bootstrap
+    type: application
+    urls:
+    - node-bootstrap-1.0.3.tgz
+    version: 1.0.3
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2022-03-07T19:13:43.441698875Z"
     description: A Helm chart for bootstrapping Kubernetes nodes.
     digest: e202c25bfb21aa1b250426cecd2022363b5e1550039246afcd21a8d5a6be5ff5
     name: node-bootstrap
@@ -13,7 +23,7 @@ entries:
     version: 1.0.2
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2022-03-07T18:54:11.741445183Z"
+    created: "2022-03-07T19:13:43.441475277Z"
     description: A Helm chart for bootstrapping Kubernetes nodes.
     digest: 85a10729c3be2c7b7c173f9428913557a264d5e46dbe79c5ecc6f891c57dd52f
     name: node-bootstrap
@@ -23,7 +33,7 @@ entries:
     version: 1.0.1
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2022-03-07T18:54:11.741105969Z"
+    created: "2022-03-07T19:13:43.441250679Z"
     description: An inofficial Helm chart for GCP's tutorial on "Automatically bootstrapping
       GKE nodes with DaemonSets"
     digest: 85f5e152c1eedebd63bff2ec046afc822fcd8752bac6a5173ee2d335de0e6ff0
@@ -34,7 +44,7 @@ entries:
     version: 0.2.1
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2022-03-07T18:54:11.740719852Z"
+    created: "2022-03-07T19:13:43.441004282Z"
     description: An inofficial Helm chart for GCP's tutorial on "Automatically bootstrapping
       GKE nodes with DaemonSets"
     digest: f4fe15c1ee85e74a1ccfaedf34dcd77b85503416c3fe4a69273fc7298ebc7436
@@ -43,4 +53,4 @@ entries:
     urls:
     - node-bootstrap-0.1.0.tgz
     version: 0.1.0
-generated: "2022-03-07T18:54:11.739657307Z"
+generated: "2022-03-07T19:13:43.440573386Z"
