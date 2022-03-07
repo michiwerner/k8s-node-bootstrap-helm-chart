@@ -30,9 +30,9 @@ spec:
       app: {{ .Release.Name }}
   template:
     metadata:
-      name: {{ .Release.Name }}
       labels:
         app: {{ .Release.Name }}
+        name: {{ .Release.Name }}
     spec:
       hostPID: true
       hostIPC: true
