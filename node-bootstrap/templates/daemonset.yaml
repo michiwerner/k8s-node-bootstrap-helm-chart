@@ -34,8 +34,6 @@ spec:
       labels:
         app: {{ .Release.Name }}
     spec:
-      restartPolicy: "Never"
-      terminationGracePeriodSeconds: 0
       hostPID: true
       hostIPC: true
       hostNetwork: true
