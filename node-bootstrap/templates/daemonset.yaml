@@ -53,14 +53,22 @@ spec:
       - image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         name: {{ .Release.Name }}
-        command: ["nsenter"],
-        args: ["-t", "1", "-m", "-u", "-i", "-n", "/tmp/{{ .Release.Name }}-bootstrap-script.sh"] 
+        command: 
+        - "nsenter"
+        args:
+        - "-t"
+        - "1"
+        - "-m"
+        - "-u"
+        - "-i"
+        - "-n"
+        - "/tmp/{{ .Release.Name }}-bootstrap-script.sh"
         securityContext:
           privileged: true
         volumeMounts:
         - name: bootstrap-script
           mountPath: /tmp/{{ .Release.Name }}-bootstrap-script.sh
-          subpath: bootstrap.sh
+          subPath: bootstrap.sh
       containers:
       - image: "gcr.io/google-containers/pause:2.0"
         name: pause
