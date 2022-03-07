@@ -15,9 +15,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Release.Name }}-entrypoint
+  name: {{ .Release.Name }}-bootstrap-script
   labels:
-    app: node-bootstrap
+    app: {{ .Release.Name }}
 data:
-  entrypoint.sh: |
-    {{- .Values.entrypointScript | nindent 4 }}
+  bootstrap.sh: |
+    {{- .Values.bootstrapScript | nindent 4 }}

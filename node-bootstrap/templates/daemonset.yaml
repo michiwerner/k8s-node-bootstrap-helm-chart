@@ -28,41 +28,39 @@ spec:
   selector:
     matchLabels:
       app: {{ .Release.Name }}
-  updateStrategy:
-    type: RollingUpdate
   template:
     metadata:
+      name: {{ .Release.Name }}
       labels:
-        name: {{ .Release.Name }}
         app: {{ .Release.Name }}
     spec:
+      restartPolicy: "Never"
+      terminationGracePeriodSeconds: 0
+      hostPID: true
+      hostIPC: true
+      hostNetwork: true
+      priorityClassName: "system-node-critical"
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
-      - name: root-mount
-        hostPath:
-          path: /
-      - name: entrypoint
+      - name: bootstrap-script
         configMap:
-          name: {{ .Release.Name }}-entrypoint
-          defaultMode: 0744
+          name: {{ .Release.Name }}-bootstrap-script
+          defaultMode: 0755
       initContainers:
       - image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         name: {{ .Release.Name }}
-        command: {{ if .Values.runEntrypointScriptChrooted }}["/bin/bash", "-c", "cp -v /mnt/scripts/entrypoint.sh /mnt/root/__node_bootstrap_entrypoint.sh && chroot /mnt/root /__node_bootstrap_entrypoint.sh; rm -fv /mnt/root/__node_bootstrap_entrypoint.sh"]{{ else }}["/mnt/scripts/entrypoint.sh"]{{ end }}
-        env:
-        - name: ROOT_MOUNT_DIR
-          value: /mnt/root
+        command: ["nsenter"],
+        args: ["-t", "1", "-m", "-u", "-i", "-n", "/tmp/{{ .Release.Name }}-bootstrap-script.sh"] 
         securityContext:
           privileged: true
         volumeMounts:
-        - name: root-mount
-          mountPath: /mnt/root
-        - name: entrypoint
-          mountPath: /mnt/scripts
+        - name: bootstrap-script
+          mountPath: /tmp/{{ .Release.Name }}-bootstrap-script.sh
+          subpath: bootstrap.sh
       containers:
       - image: "gcr.io/google-containers/pause:2.0"
         name: pause
