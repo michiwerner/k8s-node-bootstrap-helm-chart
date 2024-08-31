@@ -37,3 +37,5 @@ For now, please refer to the values.yaml for a list of available settings. You d
 because it is the very script which is run to bootstrap the node(s).
 
 For an example of a complex bootstrap script, please refer to: https://github.com/GoogleCloudPlatform/solutions-gke-init-daemonsets-tutorial/blob/master/cm-entrypoint.yaml
+
+Please remember that your bootstrap script can run more than once on the same node, so everything in there should be idempotent.

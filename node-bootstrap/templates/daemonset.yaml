@@ -33,6 +33,8 @@ spec:
       labels:
         app: {{ .Release.Name }}
         name: {{ .Release.Name }}
+      annotations:
+        checksum/bootstrap-script: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
     spec:
       hostPID: true
       hostIPC: true
